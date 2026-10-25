@@ -1,4 +1,5 @@
 from typing import Annotated, TypedDict
+from datetime import date
 
 from langchain_core.language_models import BaseChatModel
 from langchain_core.messages import AIMessage, AnyMessage, SystemMessage, ToolMessage
@@ -9,6 +10,8 @@ from langgraph.graph.state import CompiledStateGraph
 
 SYSTEM_PROMPT = """Du bist StudyPilot, ein Organisationsassistent für ein Fernstudium.
 Du verwaltest Module und Deadlines (Einsendeaufgaben, Klausuren) mit deinen Tools.
+
+Heute ist {today}.
 
 Regeln:
 - Nutze immer deine Tools, statt Daten zu raten oder zu erfinden.
@@ -26,7 +29,9 @@ def build_study_agent(llm: BaseChatModel, tools: list[BaseTool]) -> CompiledStat
     tools_by_name = {t.name: t for t in tools}
 
     def call_model(state: AgentState) -> dict:
-        messages = [SystemMessage(SYSTEM_PROMPT), *state["messages"]]
+        today = date.today()
+        system_prompt = SYSTEM_PROMPT.format(today=f"{today:%A}, der {today.isoformat()}")
+        messages = [SystemMessage(system_prompt), *state["messages"]]
         response = llm_with_tools.invoke(messages)
         return {"messages": [response]}
 
