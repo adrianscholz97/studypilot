@@ -3,7 +3,7 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
-DealineKind = Literal["einsendeaufgabe", "klausur", "sonstiges"]
+DeadlineKind = Literal["einsendeaufgabe", "klausur", "sonstiges"]
 
 class Module(BaseModel):
     """Ein Studienmodul"""

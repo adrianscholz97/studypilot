@@ -16,6 +16,7 @@ class Settings(BaseSettings):
     open_api_key: SecretStr | None = None
     anthropic_api_key: SecretStr | None = None
     ollama_base_url: str = "http://localhost:11434"
+    database_path: str = "studypilot.db"
 
 @lru_cache
 def get_settings() -> Settings:
