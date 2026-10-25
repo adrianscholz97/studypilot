@@ -13,7 +13,7 @@ print()
 print(tools["get_today"].invoke({}))
 print(tools["list_deadlines"].invoke({}))
 
-# Absichtliche Fehler: Hier soll eine verständliche Meldung kommen, kein Absturz
+# Absichtliche Fehler
 print(tools["add_deadline"].invoke({"module_code": "99999", "title": "Test", "due_date": "2026-12-01"}))
 print(tools["add_deadline"].invoke({"module_code": "12345", "title": "Test", "due_date": "1. Dezember"}))
 print(tools["mark_deadline_done"].invoke({"deadline_id": 999}))
